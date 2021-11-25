@@ -3,6 +3,7 @@ from lxml.html import fromstring
 import os
 import pandas as pd
 from throttle import Throttle
+from utils import is_location_in_north_america
 
 SLEEP_TIME = 2
 CURRENT_DIR = os.getcwd()
@@ -29,8 +30,8 @@ def scraper(url, html):
         name = item.xpath(STARTUP_NAME_XPATH)
         if not name:
             continue
-        
         name = name[0].text_content()
+        
         try:
             name, location = name.split('|')
             name = name.strip()
@@ -46,6 +47,12 @@ def scraper(url, html):
             location = item.xpath(STARTUP_LOCATION_XPATH)
             if location:
                 location = location[0].text_content().strip()
+                
+        location_in_north_america = is_location_in_north_america(location)
+        if not location_in_north_america:
+            print(f'({location or ""}) : Location Not in North America. Skipping....')
+            continue
+            
                 
         print(f'Saving {name}')     
         
