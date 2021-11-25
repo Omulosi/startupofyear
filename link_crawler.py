@@ -1,16 +1,8 @@
-"""
-    link_crawler.py
-    
-    Crawls through links and downloads data using  some given scraper.
-"""
 import re
 import socket
 from urllib.parse import urljoin, urlparse
-
-from helpers import download, get_links, get_robots_parser
+from utils import download, get_links, get_robots_parser, USER_AGENT
 from throttle import Throttle
-
-from utils import USER_AGENT
 
 socket.setdefaulttimeout(120)
 
@@ -72,9 +64,7 @@ def link_crawler(start_url, link_regex=None, robots_url=None, user_agent=USER_AG
             if not html:
                 continue
             
-            #########################################################
-            # Scrape data off of the downloaded html
-            #########################################################
+            #: Scrape data off of the downloaded html
             if scraper_callback:
                 scraper_callback(url, html)
 

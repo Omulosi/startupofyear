@@ -45,9 +45,13 @@ def scraper(url, html):
         if not location:
             location = item.xpath(STARTUP_LOCATION_XPATH)
             if location:
-                location = location[0].text_content().strip()       
+                location = location[0].text_content().strip()
+                
+        print(f'Saving {name}')     
         
         STARTUPS.append((name, location, link))
+        
+    print(f'Total: {len(STARTUPS)}')
         
     df  = pd.DataFrame(STARTUPS, columns=['Name', 'Location', 'Link'], index=None)
     df.to_csv('data.csv')
