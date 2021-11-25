@@ -5,7 +5,7 @@ import requests
 
 USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36'
 
-def download(url, num_retries=2, user_agent=USER_AGENT, proxies=None):
+def download(url, num_retries=3, user_agent=USER_AGENT, proxies=None):
     print('Downloading:', url)
     headers = {'User-Agent': user_agent}
     try:
