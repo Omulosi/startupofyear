@@ -10,8 +10,6 @@ throttle = Throttle(3)
 
 # name
 STARTUP_NAME_XPATH = './/div[contains(@class, "s-item-title")]//div[contains(@class, "s-component-content")]'
-STARTUP_NAME_XPATH_B = './/div[contains(@class, "s-item-title")]//a/text()'
-STARTUP_NAME_XPATH_C = './/div[contains(@class, "s-item-title")]//u/text()'
 
 # link
 STARTUP_LINK_XPATH = './/div[contains(@class, "s-item-title")]//a/@href'
@@ -27,7 +25,7 @@ def scraper(url, html):
     # List of elements containing startup items
     startup_items = tree.xpath('//div[contains(@class, "s-repeatable")]//div[contains(@class, "s-repeatable-item")]')
     
-    for index, item in enumerate(startup_items):
+    for item in startup_items:
         name = item.xpath(STARTUP_NAME_XPATH)
         if not name:
             continue
@@ -50,11 +48,6 @@ def scraper(url, html):
                 location = location[0].text_content().strip()       
         
         STARTUPS.append((name, location, link))
-            
-        print(f"============ {index} ==============")
-        print(f"Name ===> {name}")
-        print(f"Location =======> {location}")
-        print(f"Link  ===> {link}")
         
     df  = pd.DataFrame(STARTUPS, columns=['Name', 'Location', 'Link'], index=None)
     df.to_csv('data.csv')
